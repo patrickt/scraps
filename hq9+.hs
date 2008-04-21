@@ -37,7 +37,6 @@ module Main where
   main :: IO ()
   main = do
     ref <- newIORef 0 -- initialize the accumulator to 0
-    a <- getArgs
-    let firstArg = a !! 0
-    mapM (parse ref) firstArg -- monadically map the parse command onto the arguments
-    return ()
+    args <- getArgs
+    -- monadically map the parse command onto the concatenated arguments
+    mapM_ (parse ref) (concat args)
