@@ -13,13 +13,14 @@ module Main where
   
   bottles 0 = putStrLn "NO MOAR BEER." -- a tragic situation
   
-  bottles n = do
-    printf "%d bottles of beer on the wall,\n" n
-    printf "%d bottles of beer,\n" n
-    printf "Take one down, pass it around,\n"
-    printf "%d bottles of beer on the wall\n\n" (n - 1)
+  bottles n =
+    printf "%d bottles of beer on the wall,\n" n          >>
+    printf "%d bottles of beer,\n" n                      >>
+    printf "Take one down, pass it around,\n"             >>
+    printf "%d bottles of beer on the wall\n\n" (n - 1)   >>
     bottles (n - 1)
   
+  printquine = getArgs >>= (putStrLn . concat)
   
   -- Increments the accumulator. You can insert print statements to verify correctness.
   increment :: IORef Integer -> IO ()
@@ -30,14 +31,14 @@ module Main where
   parse ref c =
     case c of
       'h' -> putStrLn "Hello, world."
-      'q' -> putStrLn "q"
+      'q' -> printquine
       '9' -> bottles 9
       '+' -> increment ref
       otherwise -> return ()
   
   main :: IO ()
   main = do
-    ref <- newIORef 0 -- initialize the accumulator to 0
+    newIORef 0 -- initialize the accumulator to 0
     args <- getArgs
     -- monadically map the parse command onto the concatenated arguments
     mapM_ (parse ref) (concat args)
