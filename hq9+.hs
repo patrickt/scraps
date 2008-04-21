@@ -1,3 +1,7 @@
+-- This is a parser for the HQ9+ language.
+-- For more information, see http://www.cliff.biffle.org/esoterica/hq9plus.html
+-- This is a purely-functional, Haskell-based parser.
+
 module Main where
   
   import System.Environment -- for command-line arguments
@@ -6,9 +10,7 @@ module Main where
   -- prints out 99 bottles of beer on the wall. recursive and functional.
   bottles :: Integer -> IO ()
   
-  bottles 0 = do
-    putStrLn "NO MOAR BEER." -- a tragic situation
-    return ()                -- box up an empty IO monad
+  bottles 0 = putStrLn "NO MOAR BEER." -- a tragic situation
   
   bottles n = do
     putStrLn $ (show n) ++ " bottles of beer on the wall,"
@@ -18,19 +20,16 @@ module Main where
     bottles (n - 1)
   
   
+  -- Increments the accumulator. You can insert print statements to verify correctness.
   increment :: IORef Integer -> IO ()
-  increment ref = do
-    -- Uncomment this if you want proof that the accumulator is working
-    -- value <- readIORef ref -- read an IO monad and unbox it into a value
-    -- putStrLn ("Accumulating: " ++ (show value))
-    modifyIORef ref (\x -> x + 1)
-    return () -- box up an empty IO monad.
+  
+  increment ref = modifyIORef ref (\x -> x + 1)
   
   parse :: IORef Integer -> Char -> IO ()
   parse ref c =
     case c of
       'h' -> putStrLn "Hello, world."
-      'q' -> putChar 'q'
+      'q' -> putStrLn "q"
       '9' -> bottles 9
       '+' -> increment ref
       otherwise -> return ()
