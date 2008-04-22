@@ -20,7 +20,9 @@ module Main where
     printf "%d bottles of beer on the wall\n\n" (n - 1)   >>
     bottles (n - 1)
   
-  printquine = getArgs >>= (putStrLn . concat)
+  -- Prints out all passed arguments.
+  printquine :: IO ()
+  printquine = getArgs >>= (putStrLn . unwords)
   
   -- Increments the accumulator. You can insert print statements to verify correctness.
   increment :: IORef Integer -> IO ()
@@ -38,7 +40,7 @@ module Main where
   
   main :: IO ()
   main = do
-    newIORef 0 -- initialize the accumulator to 0
+    ref <- newIORef 0 -- initialize the accumulator to 0
     args <- getArgs
     -- monadically map the parse command onto the concatenated arguments
-    mapM_ (parse ref) (concat args)
+    mapM_ (parse ref) (unwords args)
