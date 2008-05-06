@@ -27,7 +27,7 @@ module Stack where
   -- Removes the top value from a stack and returns both the value and the stack.
   -- This is clumsy to do with referential transparency.
   pop :: Stack -> (Float, Stack)
-  pop (Stack (first:rest)) = (first, Stack rest)
+  pop (Stack (first:rest)) = (first, Stack (rest ++ [last rest]))
   
   --- Stack manipulation functions that depend only the top value.
   --- All of these functions, except mapFirst, have type Stack -> Stack

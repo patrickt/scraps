@@ -23,7 +23,8 @@ module Main where
     "ytox" -> ytox
     "rotate" -> rotate
     "clear" -> clear
-    "x" -> "x"
+    "x" -> x
+    "pop" -> snd . pop
     otherwise -> push (readFloat cmd)
 
   readExpr :: IORef Stack -> IO ()
