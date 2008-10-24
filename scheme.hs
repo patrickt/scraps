@@ -10,6 +10,7 @@ module Main where
                | DottedList [LispVal] LispVal
                | Number Integer
                | String [Char]
+               | Character Char
                | Boolean Bool
                
   -- =====================================
@@ -42,11 +43,12 @@ module Main where
     return $ case value of
       't' -> Boolean True
       'f' -> Boolean False
-    
+  
+  
   -- Atoms
   parseAtom :: Parser LispVal
   parseAtom = do 
-    let symbol = oneOf "!$#&|*+-/:<=>?@^_~"
+    let symbol = oneOf "!$&|*+-/:<=>?@^_~"
     first <- letter <|> symbol
     rest <- many (letter <|> digit <|> symbol)
     return $ Atom $ first : rest
@@ -60,14 +62,14 @@ module Main where
   
   parseHex :: Parser LispVal
   parseHex = do
-    string "#x"
+    try $ string "#x"
     hexDigits <- many1 hexDigit
     let converted = fst $ ((readHex hexDigits) !! 0)
     return $ Number converted
   
   parseOct :: Parser LispVal
   parseOct = do
-    string "#o"
+    try $ string "#o"
     octDigits <- many1 octDigit
     let converted = fst $ ((readOct octDigits) !! 0)
     return $ Number converted
@@ -80,7 +82,7 @@ module Main where
   readExpr :: String -> String
   readExpr input = case parse parseExpr "Scheme" input of
     Left err -> "No match: " ++ show err
-    Right val -> "Found value"
+    Right val -> "Found value."
     
   spaces :: Parser ()
   spaces = skipMany1 space
