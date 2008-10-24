@@ -1,5 +1,6 @@
 module Main where
   import Monad
+  import Data.Char ( toUpper, chr, ord )
   import Numeric
   import System.Environment
   import Text.ParserCombinators.Parsec hiding (spaces)
@@ -13,10 +14,23 @@ module Main where
                | Character Char
                | Boolean Bool
                
+               
+  -- =========================================================
+  -- = More parser combinators which Parsec doesn't include. =
+  -- =========================================================
+
+  -- |Case-insensitive variant of Parsec's 'char' function.
+  caseChar        :: Char -> CharParser st Char
+  caseChar c       = satisfy (\x -> toUpper x == toUpper c)
+
+  -- |Case-insensitive variant of Parsec's 'string' function.
+  caseString      :: String -> CharParser st [Char]
+  caseString cs    = mapM caseChar cs <?> cs
+  
   -- =====================================
   -- = Parsers for the above data types. =
   -- =====================================
-    
+  
   -- Strings
   escapedChars :: Parser String
   escapedChars = do
@@ -27,7 +41,7 @@ module Main where
       'n' -> "\n"
       'r' -> "\r"
       otherwise -> [x]
-      
+  
   parseString :: Parser LispVal
   parseString = do 
     char '"'
@@ -44,6 +58,15 @@ module Main where
       't' -> Boolean True
       'f' -> Boolean False
   
+  -- Characters
+  parseCharacter :: Parser LispVal
+  parseCharacter = do
+    try $ string "#\\"
+    value <- try (caseString "newline" <|> caseString "space") <|> do { x <- anyChar; notFollowedBy alphaNum ; return [x] }
+    return $ Character $ case value of
+      "space" -> ' '
+      "newline" -> '\n'
+      otherwise -> (value !! 0)
   
   -- Atoms
   parseAtom :: Parser LispVal
@@ -73,11 +96,32 @@ module Main where
     octDigits <- many1 octDigit
     let converted = fst $ ((readOct octDigits) !! 0)
     return $ Number converted
+    
+  parseAllLists :: Parser LispVal
+  parseAllLists = do
+    char '('
+    x <- (try parseList) <|> parseDottedList
+    char ')'
+    return x
   
+  parseList :: Parser LispVal
+  parseList = List `liftM` (sepBy parseExpr spaces)
+  
+  parseDottedList :: Parser LispVal
+  parseDottedList = do 
+    head <- endBy parseExpr spaces
+    tail <- char '.' >> spaces >> parseExpr
+    return $ DottedList head tail
+  
+  parseQuoted :: Parser LispVal
+  parseQuoted = do
+    char '\''
+    x <- parseExpr
+    return $ List [Atom "quote", x]
       
   -- Putting it all together
   parseExpr :: Parser LispVal
-  parseExpr = parseAtom <|> parseString <|> parseNumber <|> parseBool
+  parseExpr = parseAtom <|> parseCharacter <|> parseString <|> parseNumber <|> parseBool <|> parseQuoted <|> parseAllLists
 
   readExpr :: String -> String
   readExpr input = case parse parseExpr "Scheme" input of
