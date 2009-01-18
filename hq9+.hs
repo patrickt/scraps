@@ -32,6 +32,8 @@ module Main where
   increment _ accum = accum
   
   -- The actual parsing function.
+  
+   
   parse :: Integer -> String -> IO ()
   parse _ "" = return ()
   parse accum string = do
