@@ -1,0 +1,61 @@
+/* shutup.css 1.0
+ * web - peanut gallery = bliss
+ *
+ * by Steven Frank <stevenf@panic.com>
+ * http://stevenf.com/
+ */
+
+/* YouTube (standard and Feather interfaces) */
+
+#watch-comment-panel, #cm {
+	display: none !important;
+}
+
+/* Digg and other sites that use "comments" divs */
+
+.comments, #comments {
+	display: none !important;
+}
+
+/* CNN and other sites that use Disqus */
+
+#disqus_thread {
+	display: none !important;
+}
+
+/* Some Tumblr themes */
+
+.main .notes { 
+	/* adding .main keeps notes visible in the Dashboard */
+	display: none !important;
+}
+
+/* Ain't It Cool News */
+
+.block-talkback_story {
+	display: none !important;
+}
+
+/* VersionTracker */
+
+#prodReviews {
+	display: none !important;
+}
+
+/* MacUpdate */
+
+.revcontent {
+	display: none !important;
+}
+
+/* Slashdot */
+
+#commentlisting {
+	display: none !important;
+}
+
+/* Twitter trends */
+
+#trends {
+	display: none !important;
+}
