@@ -3,11 +3,13 @@
  *
  * by Steven Frank <stevenf@panic.com>
  * http://stevenf.com/
+ * modified by Patrick Thomson
+ * twitter.com/importantshock
  */
 
 /* YouTube (standard and Feather interfaces) */
 
-#watch-comment-panel, #cm {
+#watch-comments-core {
 	display: none !important;
 }
 
@@ -56,6 +58,6 @@
 
 /* Twitter trends */
 
-#trends {
+#trends.collapsible {
 	display: none !important;
 }
