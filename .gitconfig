@@ -1,0 +1,31 @@
+[user]
+	name = Patrick Thomson
+[core]
+	trustctime = false
+	excludesfile = /Users/patrickthomson/.gitignore
+	ignorecase = true
+[gc]
+	auto = 0
+[diff] 
+	tool = araxis
+	renames = copies
+	mnemonicprefix = true
+
+[merge] 
+	tool = araxis
+[grep]
+	lineNumber = true
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	reup = rebase @{u}
+[rerere]
+	enabled = 1
+[branch]
+	autosetupmerge = true
+	autosetuprebase = always
+[advice]
+	statusHints = false
+[interactive]
+	singlekey = true
