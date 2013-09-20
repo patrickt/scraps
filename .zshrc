@@ -11,7 +11,8 @@ setopt auto_pushd
 zstyle ':vcs_info:*' stagedstr '%F{28}●'
 zstyle ':vcs_info:*' unstagedstr '%F{11}●'
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats ' [%F{green}%b%c%u%F{blue}] '
 
 # Load VCS info
 autoload -Uz vcs_info
@@ -28,12 +29,12 @@ alias kx="killall -KILL Xcode"
 export CLICOLOR=1
 
 precmd() {
-	if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
+  if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
         zstyle ':vcs_info:*' formats ' [%F{green}%b%c%u%F{blue}] '
     } else {
         zstyle ':vcs_info:*' formats ' [%F{green}%b%c%u%F{red}●%F{blue}] '
     }
-	vcs_info
+    vcs_info
     print -Pn "\e]0;$PWD\a";
 }
 
