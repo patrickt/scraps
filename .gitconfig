@@ -7,12 +7,16 @@
 [gc]
 	auto = 0
 [diff] 
-	tool = araxis
 	renames = copies
 	mnemonicprefix = true
-
-[merge] 
-	tool = araxis
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	fixup = commit -a --amend -C HEAD
+[color]
+  ui = true
+  push
 [grep]
 	lineNumber = true
 [alias]
