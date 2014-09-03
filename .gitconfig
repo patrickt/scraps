@@ -1,5 +1,8 @@
 [user]
 	name = Patrick Thomson
+	email = patrick@helium.co
+[push]
+	default = simple
 [core]
 	trustctime = false
 	excludesfile = /Users/patrickthomson/.gitignore
@@ -14,6 +17,7 @@
 	co = checkout
 	br = branch
 	fixup = commit -a --amend -C HEAD
+        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [color]
   ui = true
   push
