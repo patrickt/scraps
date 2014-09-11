@@ -28,6 +28,12 @@ alias kx="killall -KILL Xcode"
 
 export CLICOLOR=1
 
+if [[ `uname` = "Linux" ]] {
+     bindkey "^[[1;3C" forward-word
+     bindkey "^[[1;3D" backward-word
+     export EDITOR="emacsclient"
+}
+
 precmd() {
   if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
         zstyle ':vcs_info:*' formats ' [%F{green}%b%c%u%F{blue}] '
