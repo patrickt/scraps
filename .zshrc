@@ -50,3 +50,11 @@ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 HISTFILE=~/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
+
+if [ -f /usr/local/erl/activate ]
+then source /usr/local/erl/activate
+fi
+
+if [ -f /usr/bin/keychain ]
+then keychain
+fi
