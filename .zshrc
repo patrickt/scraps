@@ -33,6 +33,7 @@ if [[ `uname` = "Linux" ]] {
      bindkey "^[[1;3D" backward-word
      export EDITOR="emacsclient"
      export GOPATH="/home/patrick/.go.d"
+     alias ls="ls --color"
 }
 
 precmd() {
@@ -56,5 +57,8 @@ then source /usr/local/erl/activate
 fi
 
 if [ -f /usr/bin/keychain ]
-then keychain
+then keychain id_rsa
 fi
+
+export CC=clang
+
