@@ -1,6 +1,6 @@
 [user]
 	name = Patrick Thomson
-	email = patrick.thomson@reconfigure.io
+	email = patrickt@github.com
 [push]
 	default = simple
 [core]
@@ -37,3 +37,5 @@
 	statusHints = false
 [interactive]
 	singlekey = true
+[github]
+	user = patrickt

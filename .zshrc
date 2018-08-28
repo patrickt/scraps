@@ -19,12 +19,13 @@ autoload -Uz vcs_info
 
 PROMPT='%F{blue}${vcs_info_msg_0_}%F{blue}%(?/%F{blue}/%F{red})% %F{white}%% '
 export RPS1="(%~)"
-export EDITOR="subl -w"
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
 alias g="git"
 alias o="open"
 alias pbpatch="pbpaste | patch"
 alias kx="killall -KILL Xcode"
+alias :r='$(history -p !!)'
 
 export CLICOLOR=1
 
